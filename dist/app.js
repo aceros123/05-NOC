@@ -9,10 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config"); //permite ver variables de entorno (env)
 const server_1 = require("./presentation/server");
+const envs_plugin_1 = require("./config/plugins/envs.plugin");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     main();
 }))();
 function main() {
     server_1.Server.start();
+    console.log(envs_plugin_1.envs);
 }

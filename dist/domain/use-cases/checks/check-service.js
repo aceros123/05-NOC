@@ -10,8 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckService = void 0;
+const log_entity_1 = require("../../entities/log.entity");
 class CheckService {
-    constructor(successCallback, errorCallback) {
+    constructor(logRepository, successCallback, errorCallback) {
+        this.logRepository = logRepository;
         this.successCallback = successCallback;
         this.errorCallback = errorCallback;
     }
@@ -22,11 +24,26 @@ class CheckService {
                 if (!req.ok) {
                     throw new Error(`Error en check services ${url}`);
                 }
-                this.successCallback();
+                const log = new log_entity_1.LogEntity({
+                    message: `Services ${url} working`,
+                    level: log_entity_1.LogSeverityLevel.Low,
+                    origin: 'CheckService',
+                    createdAt: new Date
+                });
+                this.logRepository.saveLog(log);
+                this.successCallback && this.successCallback();
                 return true;
             }
             catch (error) {
-                this.errorCallback(`${error}`);
+                const errorMessage = `${url} is not ok. ${error}`;
+                const log = new log_entity_1.LogEntity({
+                    message: errorMessage,
+                    level: log_entity_1.LogSeverityLevel.High,
+                    origin: 'CheckService',
+                    createdAt: new Date
+                });
+                this.logRepository.saveLog(log);
+                this.errorCallback && this.errorCallback(`${error}`);
                 return false;
             }
         });

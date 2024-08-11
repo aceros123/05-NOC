@@ -1,13 +1,16 @@
 # dev
 1. Clonar el archivo env.template a .env
-2. configurar las variables de entorno
+2. Configurar las variables de entorno
 
-``
-PORT = 
+``` 
+PORT = 3000
 
 MAILER_EMAIL =
 MAILER_SECRET_KEY = 
 
-PROD =
+PROD = False
 
-``
+```
+3. Ejecutar el comando  ```npm install```
+
+4. Ejecutar ```npm run dev```
