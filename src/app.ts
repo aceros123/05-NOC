@@ -14,6 +14,6 @@ await MongoDatabase.connect({
 })
 
    
-    // Server.start();
+     Server.start();
 
 }
